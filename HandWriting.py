@@ -85,7 +85,7 @@ model.compile(optimizer=adam,
 
 print('Training ------------')
 
-model.fit(X_train, y_train, epochs=1, batch_size=64)
+model.fit(X_train, y_train, epochs=10, batch_size=64)
 
 print('\nTesting ------------')
 
