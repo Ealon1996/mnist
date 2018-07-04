@@ -28,6 +28,7 @@ model.add(Convolution2D(
 ))
 model.add(Activation('relu'))
 
+
 # Pooling layer 1 (max pooling) output shape (32, 14, 14)
 model.add(MaxPooling2D(
     pool_size=2,
@@ -35,6 +36,41 @@ model.add(MaxPooling2D(
     padding='same',    # Padding method
     data_format='channels_first',
 ))
+
+# Conv layer 2 output shape (64, 14, 14)
+model.add(Convolution2D(64, 5, strides=1, padding='same', data_format='channels_first'))
+model.add(Activation('relu'))
+
+# Pooling layer 2 (max pooling) output shape (64, 7, 7)/
+model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
+
+# Fully connected layer 1 input shape (64 * 7 * 7) = (3136), output shape (1024)
+model.add(Flatten())
+model.add(Dense(1024))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 5, strides=1, padding='same', data_format='channels_first'))
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
+
+model.add(Flatten())
+model.add(Dense(1024))
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
+
+model.add(Flatten())
+model.add(Dense(1024))
+model.add(Activation('relu'))
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+adam = Adam(lr=1e-4)
+
+# show model
+
+model.summary()
 
 adam = Adam(lr=1e-4)
 
@@ -49,7 +85,7 @@ model.compile(optimizer=adam,
 
 print('Training ------------')
 
-model.fit(X_train, y_train, epochs=10, batch_size=64)
+model.fit(X_train, y_train, epochs=1, batch_size=64)
 
 print('\nTesting ------------')
 
