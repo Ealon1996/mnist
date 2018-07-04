@@ -35,3 +35,27 @@ model.add(MaxPooling2D(
     padding='same',    # Padding method
     data_format='channels_first',
 ))
+
+adam = Adam(lr=1e-4)
+
+# show model
+
+model.summary()
+
+
+model.compile(optimizer=adam,
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+print('Training ------------')
+
+model.fit(X_train, y_train, epochs=10, batch_size=64)
+
+print('\nTesting ------------')
+
+loss, accuracy = model.evaluate(X_test, y_test)
+
+print('\ntest loss: ', loss)
+print('\ntest accuracy: ', accuracy)
+
+model.save('HandWrite_model.h5')
